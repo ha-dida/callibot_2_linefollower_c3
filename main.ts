@@ -20,6 +20,14 @@ function fahre_links () {
 function fahre_zurück () {
     calliBot2.motor(C2Motor.beide, C2Dir.rueckwaerts, 50)
 }
+function LEDS_blinken () {
+    calliBot2.setLed(C2Motor.beide, true)
+    calliBot2.setRgbLed1(C2RgbLed.All, 0x00ff00, 8)
+    basic.pause(1000)
+    calliBot2.setLed(C2Motor.beide, false)
+    calliBot2.setRgbLed1(C2RgbLed.All, 0x00ff00, 0)
+    basic.pause(1000)
+}
 function kopdrehen () {
     calliBot2.servo(C2Servo.Servo2, 0)
     basic.pause(500)
@@ -36,21 +44,20 @@ function fahre_vor () {
 calliBot2.servo(C2Servo.Servo1, 0)
 calliBot2.servo(C2Servo.Servo2, 90)
 basic.pause(100)
-let Index = 0
+let Index = false
 basic.forever(function () {
     if (calliBot2.entfernung(C2Einheit.cm) <= 10) {
         anhalten()
         lader()
         kopdrehen()
+        LEDS_blinken()
     } else {
-        for (let Index = 0; Index <= 4; Index++) {
-            if (!(calliBot2.readLineSensor(C2Sensor.links, C2SensorStatus.hell)) && !(calliBot2.readLineSensor(C2Sensor.rechts, C2SensorStatus.hell))) {
-                fahre_zurück()
-            } else if (!(calliBot2.readLineSensor(C2Sensor.links, C2SensorStatus.hell)) && calliBot2.readLineSensor(C2Sensor.rechts, C2SensorStatus.hell)) {
-                fahre_links()
-            } else if (calliBot2.readLineSensor(C2Sensor.links, C2SensorStatus.hell) && !(calliBot2.readLineSensor(C2Sensor.rechts, C2SensorStatus.hell))) {
-                fahre_rechts()
-            }
+        if (!(calliBot2.readLineSensor(C2Sensor.links, C2SensorStatus.hell)) && !(calliBot2.readLineSensor(C2Sensor.rechts, C2SensorStatus.hell))) {
+            fahre_vor()
+        } else if (!(calliBot2.readLineSensor(C2Sensor.links, C2SensorStatus.hell)) && calliBot2.readLineSensor(C2Sensor.rechts, C2SensorStatus.hell)) {
+            fahre_links()
+        } else if (calliBot2.readLineSensor(C2Sensor.links, C2SensorStatus.hell) && !(calliBot2.readLineSensor(C2Sensor.rechts, C2SensorStatus.hell))) {
+            fahre_rechts()
         }
     }
 })
