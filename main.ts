@@ -21,6 +21,9 @@ function fahre_rechts () {
     calliBot2.motor(C2Motor.links, C2Dir.vorwaerts, 50)
     calliBot2.motor(C2Motor.rechts, C2Dir.rueckwaerts, 20)
 }
+function schranke_open () {
+	
+}
 function fahre_links () {
     calliBot2.motor(C2Motor.links, C2Dir.rueckwaerts, 20)
     calliBot2.motor(C2Motor.rechts, C2Dir.vorwaerts, 50)
@@ -40,6 +43,9 @@ function kopdrehen () {
 }
 function fahre_vor () {
     calliBot2.motor(C2Motor.beide, C2Dir.vorwaerts, 50)
+}
+function schranke_close () {
+	
 }
 calliBot2.servo(C2Servo.Servo1, 0)
 calliBot2.servo(C2Servo.Servo2, 90)
